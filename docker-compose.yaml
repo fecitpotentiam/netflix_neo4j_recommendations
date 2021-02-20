@@ -1,0 +1,28 @@
+version: '3'
+services:
+  neo4j:
+    image: neo4j:4.2.2
+    restart: unless-stopped
+    ports:
+      - 7474:7474
+      - 7687:7687
+    volumes:
+      - ./conf:/conf
+      - ./data:/data
+      - ./import:/import
+      - ./logs:/logs
+      - ./plugins:/plugins
+    environment:
+      # Raise memory limits
+      - NEO4J_dbms.memory.pagecache.size=1G
+      - NEO4J_dbms.memory.heap.initial_size=1G
+      - NEO4J_dbms.memory.heap.max_size=2G
+
+  web:
+    build: .
+    restart: unless-stopped
+    command: uvicorn main:app --workers 1 --host 0.0.0.0 --port 80
+    depends_on:
+      - neo4j
+    ports:
+        - "80:80"
