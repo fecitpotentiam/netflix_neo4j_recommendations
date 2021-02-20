@@ -29,7 +29,7 @@ class Reasoner:
         else:
             raise ValueError("Too many params (works only with one or two params)")
 
-    def get_recommendations(self, title: str, params: List[str], limit: int = 20, ) -> List[str]:
+    def get_recommendations(self, title: str, params: List[str], limit: int = 20) -> List[str]:
         query = self.__create_query(title, limit, params)
 
         return [product['rec']['title'] for product in self.graph.run(query).data()]
