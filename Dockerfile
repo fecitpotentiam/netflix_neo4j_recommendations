@@ -9,5 +9,9 @@ RUN apt-get update \
 
 ADD . /code
 WORKDIR /code
+
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["sh", " /docker-entrypoint.sh"]
+
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir

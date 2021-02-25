@@ -57,3 +57,4 @@ class Importer:
 
 if __name__ == '__main__':
     importer = Importer()
+    importer.import_data()
